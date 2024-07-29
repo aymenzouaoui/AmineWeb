@@ -1,0 +1,20 @@
+<div class="form-container">
+    <h2>{{ isEditMode ? 'Edit Category' : 'Add New Category' }}</h2>
+    <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+      <div class="form-group">
+        <br>
+        <label for="categoryName">Category Name:</label>
+        <br>        <br>
+
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+               type="text" 
+               id="categoryName" 
+               name="categoryName" 
+               [(ngModel)]="categoryName" 
+               required>
+      </div>
+      <br>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{ isEditMode ? 'Update' : 'Add' }}</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,172 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Toggle Button -->
+    <div class="flex justify-right p-10">
+        <button class="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg" mat-button
+            (click)="isCenteredDivVisible = !isCenteredDivVisible">
+            {{ isCenteredDivVisible ? '' : '' }} ADD Application
+        </button>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+
+        <!-- CONTENT GOES HERE -->
+        <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
+
+
+                <div *ngIf="isCenteredDivVisible" class="centered-div">
+
+                    <div style="display: flex; flex-direction: column; justify-content: center;  height: 25.0vh;">
+                        <div><!--
+                            <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+                                {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+                              </button>-->
+                            <mat-stepper [linear]="!isLinear" #stepper>
+                                <!-- Search -->
+                                <mat-step [stepControl]="firstFormGroup">
+                                    <form [formGroup]="firstFormGroup">
+                                        <ng-template matStepLabel>Fill out your application details</ng-template>
+
+                                        <mat-form-field>
+                                            <mat-label>Name</mat-label>
+                                            <input matInput placeholder="Application name" formControlName="firstCtrl"
+                                                required style="width: 300px;">
+                                        </mat-form-field>
+
+                                        <div style="margin-top: 20px;">
+                                            <!-- Add space between "Name" and "Language of Development" -->
+                                            <mat-form-field>
+                                                <mat-label>Framework/Library</mat-label>
+                                                <mat-select formControlName="languageOfDevelopment">
+                                                    <mat-option *ngFor="let lang of programmingLanguages" [value]="lang">{{
+                                                        lang }}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div>
+                                            <button mat-button matStepperNext>Next</button>
+                                        </div>
+
+                                        <br><br><br><br>
+                                    </form>
+                                </mat-step>
+                                <mat-step [stepControl]="secondFormGroup" label="Fill out your application logo">
+                                    <form [formGroup]="secondFormGroup">
+                                        <label for="logoUpload">Upload Logo:</label>
+
+                                        <!-- Add this button inside your Angular template where appropriate -->
+                                        <button mat-button (click)="openCloudinaryWidget()">Upload Logo with
+                                            Cloudinary</button>
+
+                                        <div>
+                                            <button mat-button matStepperPrevious>Back</button>
+                                            <button mat-button matStepperNext>Next</button>
+                                        </div>
+                                    </form>
+                                </mat-step>
+
+
+                                <mat-step>
+                                    <ng-template matStepLabel>Done</ng-template>
+                                    <p>You are now done.</p>
+                                    <div>
+                                        <button mat-button matStepperPrevious>Back</button>
+                                        <button mat-button (click)="addApplication()">ADD</button>
+                                    </div>
+                                </mat-step>
+                            </mat-stepper>
+                        </div>
+
+                    </div>
+                </div>
+
+            <div>
+                <!-- Search and table -->
+                <div>
+                    <!-- Search field -->
+                    <mat-label>Search application</mat-label>
+                    <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon>
+                        <input matInput [placeholder]="'Application name'" [(ngModel)]="searchTerm"
+                            (input)="search()">
+                        <button mat-icon-button matSuffix></button>
+                    </mat-form-field>
+                </div>
+
+                <!-- Table with fixed height and overflow -->
+                <div class="overflow-auto" style="max-height: calc(100vh - 300px);">
+                    <div class="card">
+                        <table class="w-full table-auto">
+                            <thead>
+                                <tr class="bg-gray-200 dark:bg-gray-800">
+                                    <th class="py-2 px-4 border">Logo</th>
+                                    <th class="py-2 px-4 border">Name</th>
+                                    <th class="py-2 px-4 border">Creation Date</th>
+                                    <th class="py-2 px-4 border">Secret Key</th>
+                                    <th class="py-2 px-4 border">Etat</th>
+                                    <th class="py-2 px-4 border">Lock</th>
+                                    <th class="py-2 px-4 border">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Team members -->
+                                <ng-container *ngFor="let application of filteredApplications; trackBy: trackByFn;">
+                                    <tr class="border-b dark:border-gray-700">
+                                        <td class="py-2 px-4 border">
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-10 h-10 rounded-full overflow-hidden">
+                                                    <ng-container *ngIf="application.logo">
+                                                        <img class="object-cover w-full h-full" src={{application.logo}}
+                                                            alt="application logo" />
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-2 px-4 border">{{application.name}}</td>
+                                        <td class="py-2 px-4 border">{{application.createdAt}}</td>
+                                        <td class="py-2 px-4 border">
+                                            <div *ngIf="application.showSecret">{{application.secretKey}}</div>
+                                            <div *ngIf="!application.showSecret">
+                                                **************************************************
+                                            </div>
+                                        </td>
+                                        <td class="py-2 px-4 border">
+                                            <div class="hidden lg:block">
+                                                <ng-container *ngIf="application.etat">
+                                                    <mat-icon class="text-green-400 icon-size-5"
+                                                        [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                </ng-container>
+                                                <ng-container *ngIf="!application.etat">
+                                                    <mat-icon class="text-gray-400 icon-size-5"
+                                                        [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
+                                                </ng-container>
+                                            </div>
+                                        </td>
+                                        <td class="py-2 px-4 border">
+                                            <button mat-icon-button (click)="toggleSecretVisibility(application)">
+                                                <mat-icon class="text-hint"
+                                                    [svgIcon]="application.showSecret ? 'heroicons_solid:eye' : 'heroicons_solid:eye-slash'"></mat-icon>
+                                            </button>
+                                            <button mat-icon-button (click)="copySecret(application.secretKey)">
+                                                <mat-icon class="text-hint"
+                                                    [svgIcon]="'heroicons_outline:clipboard'"></mat-icon>
+                                            </button>
+                                        </td>
+                                        <td class="py-2 px-4 border">
+                                            <button mat-icon-button (click)="deleteApplication(application)">
+                                                <mat-icon class="text-hint"
+                                                    [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>

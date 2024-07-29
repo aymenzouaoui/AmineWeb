@@ -1,0 +1,49 @@
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dynamic-list {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .dynamic-list-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    user-select: none;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dynamic-list-item:hover {
+    background-color: #f0f0f0;
+  }
+
+  .chat-interface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .drop-zone {
+    width: 100%;
+    min-height: 200px;
+    border: 2px dashed #ccc;
+    margin-top: 20px;
+    padding: 20px;
+  }
+
+  .message {
+    padding: 10px;
+    margin: 5px;
+    background-color: #a91463;
+    border: 1px solid #5c1515;
+    border-radius: 5px;
+  }

@@ -1,0 +1,136 @@
+[
+    {
+        "version": "1.0",
+        "image": {
+            "name": "417252929_749464816712177_4692086713599374877_n__1__1707819970540.jpg",
+            "baseName": "417252929_749464816712177_4692086713599374877_n__1__1707819970540.jpg",
+            "format": "JPEG",
+            "formatDescription": "JPEG",
+            "mimeType": "image\/jpeg",
+            "class": "DirectClass",
+            "geometry": {
+                "width": 2000,
+                "height": 1482,
+                "x": 0,
+                "y": 0
+            },
+            "resolution": {
+                "x": 120,
+                "y": 120
+            },
+            "printSize": {
+                "x": 16.6667,
+                "y": 12.35
+            },
+            "units": "PixelsPerInch",
+            "type": "TrueColor",
+            "baseType": "Undefined",
+            "endianness": "Undefined",
+            "colorspace": "sRGB",
+            "depth": 8,
+            "baseDepth": 8,
+            "channelDepth": {
+                "red": 8,
+                "green": 8,
+                "blue": 1
+            },
+            "pixels": 8892000,
+            "imageStatistics": {
+                "Overall": {
+                    "min": 0,
+                    "max": 255,
+                    "mean": 40.7254,
+                    "median": 32.3333,
+                    "standardDeviation": 33.9907,
+                    "kurtosis": 8.64704,
+                    "skewness": 2.56995,
+                    "entropy": 0.141738
+                }
+            },
+            "channelStatistics": {
+                "red": {
+                    "min": 0,
+                    "max": 255,
+                    "mean": 2.79719,
+                    "median": 1,
+                    "standardDeviation": 19.7349,
+                    "kurtosis": 150.761,
+                    "skewness": 12.2634,
+                    "entropy": 0.117163
+                },
+                "green": {
+                    "min": 13,
+                    "max": 255,
+                    "mean": 40.5176,
+                    "median": 31,
+                    "standardDeviation": 34.1066,
+                    "kurtosis": 13.3576,
+                    "skewness": 3.67593,
+                    "entropy": 0.147738
+                },
+                "blue": {
+                    "min": 13,
+                    "max": 255,
+                    "mean": 78.8614,
+                    "median": 65,
+                    "standardDeviation": 48.1306,
+                    "kurtosis": 8.77565,
+                    "skewness": 3.26549,
+                    "entropy": 0.160311
+                }
+            },
+            "renderingIntent": "Perceptual",
+            "gamma": 0.454545,
+            "chromaticity": {
+                "redPrimary": {
+                    "x": 0.64,
+                    "y": 0.33
+                },
+                "greenPrimary": {
+                    "x": 0.3,
+                    "y": 0.6
+                },
+                "bluePrimary": {
+                    "x": 0.15,
+                    "y": 0.06
+                },
+                "whitePrimary": {
+                    "x": 0.3127,
+                    "y": 0.329
+                }
+            },
+            "matteColor": "#BDBDBD",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#DFDFDF",
+            "transparentColor": "#00000000",
+            "interlace": "None",
+            "intensity": "Undefined",
+            "compose": "Over",
+            "pageGeometry": {
+                "width": 2000,
+                "height": 1482,
+                "x": 0,
+                "y": 0
+            },
+            "dispose": "Undefined",
+            "iterations": 0,
+            "compression": "JPEG",
+            "quality": 94,
+            "orientation": "Undefined",
+            "properties": {
+                "date:create": "2024-02-11T09:26:38+00:00",
+                "date:modify": "2024-02-11T09:26:38+00:00",
+                "date:timestamp": "2024-02-11T09:26:45+00:00",
+                "jpeg:colorspace": "2",
+                "jpeg:sampling-factor": "2x2,1x1,1x1",
+                "signature": "d1c6cad6d7d0a110199d3384d64eb2709fcccbd6032bb25f88314f6533199336"
+            },
+            "tainted": false,
+            "filesize": "221204B",
+            "numberPixels": "2964000",
+            "pixelsPerSecond": "1.2532GB",
+            "userTime": "0.000u",
+            "elapsedTime": "0:01.002"
+        }
+    }
+]

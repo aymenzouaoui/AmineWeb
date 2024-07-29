@@ -1,0 +1,291 @@
+<div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        crossorigin="anonymous">
+
+    <style>
+        .code-box {
+            background-color: #CCCCCC;
+            /* Adjust color as needed */
+            padding: 10px;
+            /* Adjust padding as needed */
+            border-radius: 5px;
+            /* Adjust border radius as needed */
+            display: block;
+            white-space: pre-wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            /* Applying Google Font */
+        }
+
+        .btn-kotlin {
+            background-color: #FF5722;
+            /* Adjust color as needed */
+            color: white;
+        }
+
+        .btn-swift {
+            background-color: #FFAC45;
+            /* Adjust color as needed */
+            color: white;
+        }
+
+        .btn-flutter {
+            background-color: #007ACC;
+            /* Adjust color as needed */
+            color: white;
+        }
+
+        /* Styles for search bar */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            /* Adjust margin as needed */
+        }
+
+        .filtered-sections {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            /* Adjust as needed */
+            border: 1px solid #ccc;
+            /* Adjust as needed */
+            padding: 5px;
+            width: 100%;
+            /* Ensure it takes full width of the search container */
+            z-index: 999;
+            /* Ensure it's above other elements */
+        }
+
+        .blue-text {
+            color: blue;
+        }
+
+        .red-text {
+            color: red;
+        }
+
+        .green-text {
+            color: green;
+        }
+
+        .yellow-text {
+            color: yellow;
+        }
+
+        .code-box-title {
+            font-weight: bold;
+            color: #ffffff;
+            /* Text color */
+            background-color: #808080;
+            /* Blue color */
+            padding: 5px;
+            /* Adjust padding as needed */
+            border-top-left-radius: 5px;
+            /* Adjust border radius as needed */
+            border-top-right-radius: 5px;
+            /* Adjust border radius as needed */
+        }
+
+        .search-input {
+            padding: 10px;
+            width: 300px;
+            /* Adjust width as needed */
+            border: 2px solid #ccc;
+            /* Border color */
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            /* Remove default input focus outline */
+        }
+
+        .search-input:focus {
+            border-color: #007ACC;
+            /* Border color on focus */
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .filtered-sections {
+            position: absolute;
+            top: calc(100% + 5px);
+            /* Adjust positioning if needed */
+            left: 0;
+            background-color: #ffffff;
+            /* Adjust background color */
+            border: 1px solid #ccc;
+            /* Adjust border color */
+            border-radius: 5px;
+            /* Add border radius for a softer look */
+            padding: 3px;
+            /* Adjust padding for smaller size */
+            width: 100%;
+            z-index: 999;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Add box shadow for depth */
+        }
+
+        .filtered-sections div {
+            padding: 6px 10px;
+            /* Adjust padding for better spacing */
+            font-size: 14px;
+            /* Adjust font size */
+            color: #333333;
+            /* Adjust font color */
+        }
+
+        .filtered-sections div:hover {
+            background-color: #f0f0f0;
+            /* Add hover effect */
+            cursor: pointer;
+        }
+    </style>
+
+
+
+
+    <mat-drawer-container class="flex-auto sm:h-full">
+        <!-- Drawer -->
+        <mat-drawer class="sm:w-96 dark:bg-gray-900" [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened"
+            #drawer>
+            <!-- Header -->
+
+            <div class="flex items-center justify-between m-8 mr-6 sm:my-10">
+
+                <div class="flex items-center">
+                    <!-- Icon -->
+                    <i class="fas fa-file-alt fa-2x mr-2"></i> <!-- Increased size with fa-2x -->
+                    <!-- Title -->
+                    <div class="text-4xl font-extrabold tracking-tight leading-none">Docs</div>
+
+                </div>
+
+                <!-- Close button -->
+                <div class="lg:hidden">
+
+                    <button mat-icon-button (click)="drawer.close()">
+                        <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                    </button>
+                </div>
+
+            </div>
+            <button class="ml-4 px-1 sm:px-4 min-w-10" mat-flat-button [color]="'primary'" (click)="addNewCategory()">
+                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus-circle'"></mat-icon>
+                <span class="hidden sm:inline-block ml-2">New Category</span>
+            </button>
+            <br><br>
+            <!-- Panel links -->
+            <div class="flex flex-col divide-y border-t border-b">
+                <ng-container *ngFor="let category of panels">
+                    <div class="py-2 px-4">
+                        <div class="flex items-center justify-between">
+
+                            <div class="font-bold text-lg mb-2">{{ category.name }}</div>
+                            <div class="flex">
+                                <!-- Delete icon for category -->
+                                <mat-icon class="cursor-pointer mr-2 text-sm"
+                                    (click)="deleteCategpryConfirmation(category.id)">delete</mat-icon>
+                                <!-- Edit icon for category -->
+                                <mat-icon class="cursor-pointer text-sm"
+                                    (click)="editCategory(category.id)">edit</mat-icon>
+                                <mat-icon class="cursor-pointer text-sm"
+                                    (click)="addSection(category.id)">add</mat-icon>
+
+                            </div>
+                        </div>
+                        <ng-container *ngFor="let section of category.sections">
+                            <div class="flex items-center justify-between cursor-pointer"
+                                (click)="goToPanel(section.id)">
+                                <div>{{ section.title }}</div>
+                                <div class="flex">
+                                    <!-- Edit icon for section -->
+                                    <mat-icon class="cursor-pointer text-sm"
+                                        (click)="editSection(category.id, section.id)">edit</mat-icon>
+                                    <!-- Delete icon for section -->
+                                    <mat-icon class="text-sm"
+                                        (click)="deleteSectionConfirmation(section.id)">delete</mat-icon>
+
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+
+        </mat-drawer>
+        <!-- Drawer content -->
+        <mat-drawer-content class="flex flex-col">
+            <!-- Main -->
+            <div class="flex-auto px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12">
+                <!-- Panel header -->
+                <div class="flex items-center">
+                    <!-- Drawer toggle -->
+                    <button class="lg:hidden -ml-2" mat-icon-button (click)="drawer.toggle()">
+                        <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+                    </button>
+                    <!-- Panel title -->
+                </div>
+                <div class="px-6 py-4">
+                    <!-- Search bar -->
+                    <!-- Search bar -->
+                    <div class="search-container">
+                        <input class="search-input" type="search" placeholder="Search..." [(ngModel)]="searchQuery"
+                            (input)="search($event.target.value)">
+                        <!-- Display filtered sections if visible -->
+                        <div *ngIf="filteredSectionsVisible" class="filtered-sections">
+                            <div *ngFor="let section of filteredSections" (click)="navigateToSection(section.id)">
+                                {{ section.title }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <a class="text-2xl font-bold text-blue-500 hover:underline" *ngIf="sectionDetails?.title">{{
+                    sectionDetails.title }}</a>
+
+                <!-- Language options -->
+                <div class="flex justify-around mt-4">
+                    <button class="btn" style="background-color: #FF5722; color: white;"
+                        (click)="selectedLanguage = 'Kotlin'">Kotlin</button>
+                    <button class="btn" style="background-color: #FFAC45; color: white;"
+                        (click)="selectedLanguage = 'Swift'">Swift</button>
+                    <button class="btn" style="background-color: #007ACC; color: white;"
+                        (click)="selectedLanguage = 'Flutter'">Flutter</button>
+                </div>
+
+                <!-- Selected language paragraph -->
+                <div class="px-6 py-4">
+                    <p *ngIf="selectedLanguage === 'Kotlin'"
+                        [innerHTML]="processDescriptionF(sectionDetails?.descriptionK)"></p>
+                    <p *ngIf="selectedLanguage === 'Swift'"
+                        [innerHTML]="processDescriptionF(sectionDetails?.descriptionS)"></p>
+                    <p *ngIf="selectedLanguage === 'Flutter'"
+                        [innerHTML]="processDescriptionF(sectionDetails?.descriptionF)"></p>
+                </div>
+
+
+                <!-- Load settings panel -->
+                <div class="mt-8">
+                    <ng-container [ngSwitch]="selectedPanel">
+                        <!-- Account -->
+                        <ng-container *ngSwitchCase="'account'">
+                            <settings-account></settings-account>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

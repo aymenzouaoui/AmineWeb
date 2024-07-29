@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="font-bold text-lg mb-2">{{ isEditMode ? 'Update' : 'Create' }} Section</div>
+    <div class="scrollable-container">
+        <form (ngSubmit)="onSubmit()" class="form">
+            <div class="form-group">
+                <label for="title" class="label">Title:</label>
+                <input type="text" id="title" name="title" [(ngModel)]="section.title" required class="input">
+            </div>
+            <div class="form-group">
+                <label for="descriptionF" class="label">Description for Flutter:</label>
+                <div class="input larger-textarea">
+                    <textarea id="descriptionF" name="descriptionF" [(ngModel)]="section.descriptionF" required rows="6"></textarea>
+                </div>
+                <div>
+                    <button type="button" (click)="wrapTextWithTag('red')" class="red-button"></button>
+                    <button type="button" (click)="makeTextBold()" class="bold-button">Bold</button>
+                    <button type="button" (click)="insertCodeBox()" class="code-box-button"><i class="fas fa-code"></i></button>
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <label for="descriptionS" class="label">Description for Swift:</label>
+                <div class="input larger-textarea">
+                    <textarea id="descriptionS" name="descriptionS" [(ngModel)]="section.descriptionS" required rows="6"></textarea>
+                </div>
+                <div>
+                    <button type="button" (click)="wrapTextWithTagS('red')" class="red-button"></button>
+                    <button type="button" (click)="makeTextBoldS()" class="bold-button">Bold</button>
+                    <button type="button" (click)="insertCodeBoxS()" class="code-box-button"><i class="fas fa-code"></i></button>
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <label for="descriptionK" class="label">Description for Kotlin:</label>
+                <div class="input larger-textarea">
+                    <textarea id="descriptionK" name="descriptionK" [(ngModel)]="section.descriptionK" required rows="6"></textarea>
+                </div>
+                <div>
+                    <button type="button" (click)="wrapTextWithTagK('red')" class="red-button"></button>
+                    <button type="button" (click)="makeTextBoldK()" class="bold-button">Bold</button>
+                    <button type="button" (click)="insertCodeBoxK()" class="code-box-button"><i class="fas fa-code"></i></button>
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

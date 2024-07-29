@@ -1,0 +1,89 @@
+<div >
+
+    <!-- Add team member -->
+    <div class="w-full">
+        <mat-form-field
+            class="w-full"
+            [subscriptSizing]="'dynamic'">
+            <mat-label>Search application </mat-label>
+            <mat-icon
+                class="icon-size-5"
+                [svgIcon]="'heroicons_solid:user'"
+                matPrefix></mat-icon>
+            <input
+                matInput
+                [placeholder]="'Application name'">
+            <button
+                mat-icon-button
+                matSuffix>
+
+            </button>
+        </mat-form-field>
+    </div>
+
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-200 dark:bg-gray-800">
+                <th class="py-2 px-4 border">Avatar</th>
+                <th class="py-2 px-4 border">Name</th>
+                <th class="py-2 px-4 border">Role</th>
+
+                <th class="py-2 px-4 border">Creation Date</th>
+                <th class="py-2 px-4 border">Secret Key</th>
+                <th class="py-2 px-4 border">Password Lock</th>
+                <th class="py-2 px-4 border">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Team members -->
+            <ng-container *ngFor="let member of members; trackBy: trackByFn;">
+                <tr class="border-b dark:border-gray-700">
+                    <td class="py-2 px-4 border">
+                        <div class="flex items-center">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+                                <ng-container *ngIf="member.avatar">
+                                    <img class="object-cover w-full h-full" [src]="member.avatar" alt="Contact avatar"/>
+                                </ng-container>
+                                <ng-container *ngIf="!member.avatar">
+                                    <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                        {{member.name.charAt(0)}}
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                        </div>
+                    </td>
+                    <td class="py-2 px-4 border">{{member.name}}</td>
+                    <td class="py-2 px-4 border">
+                        <mat-form-field class="fuse-mat-dense w-32" [subscriptSizing]="'dynamic'">
+                            <mat-select [panelClass]="'w-72 min-w-72 max-w-72 h-auto max-h-none'" [value]="member.role" disableOptionCentering #roleSelect="matSelect">
+                                <mat-select-trigger class="text-md">
+                                    <span>Role:</span>
+                                    <span class="ml-1 font-medium">{{roleSelect.value | titlecase}}</span>
+                                </mat-select-trigger>
+                                <ng-container *ngFor="let role of roles">
+                                    <mat-option class="h-auto py-4 leading-none" [value]="role.value">
+                                        <div class="font-medium">{{role.label}}</div>
+                                        <div class="mt-1.5 text-sm whitespace-normal leading-normal text-secondary">{{role.description}}</div>
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+
+                    <td class="py-2 px-4 border">Date de creation</td>
+                    <td class="py-2 px-4 border">Secret key******************</td>
+                    <td class="py-2 px-4 border">
+                        <button mat-icon-button>
+                            <mat-icon class="text-hint" [svgIcon]="'password-lock-solid-svgrepo-com'"></mat-icon>
+                        </button>
+                    </td>
+                    <td class="py-2 px-4 border">
+                        <button mat-icon-button>
+                            <mat-icon class="text-hint" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>

@@ -1,0 +1,70 @@
+/* add-section.component.scss */
+.input, .larger-textarea {
+    max-width: 100%; /* Adjust the maximum width as needed */
+}
+.container {
+    text-align: center;
+    margin-top: 50px; /* Adjust as needed */
+}
+.scrollable-container {
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto;
+}
+
+.title {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.input {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.btn {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+.red-button {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border: none;
+    margin-right: 5px; /* Adjust as needed */
+}
+
+.bold-button {
+    font-weight: bold;
+    margin-right: 5px; /* Adjust as needed */
+}
+
+.code-box-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px; /* Adjust as needed */
+}

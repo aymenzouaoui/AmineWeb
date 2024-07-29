@@ -1,0 +1,176 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <mat-drawer-container class="flex-auto h-full bg-card dark:bg-dark" (backdropClick)="onBackdropClicked()">
+        <!-- Drawer for displaying user details -->
+        <mat-drawer #matDrawer class="mat-drawer w-full md:w-72 dark:bg-gray-800" [mode]="drawerMode" [position]="'end'" [disableClose]="true">
+            <div class="drawer-content p-4">
+                <div *ngIf="selectedUser" class="flex flex-col relative">
+                    <!-- Close button -->
+                    <button mat-icon-button class="absolute top-0 right-0" (click)="matDrawer.close()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <!-- Edit button -->
+                    <button mat-icon-button class="absolute top-10 right-0" (click)="toggleUpdateForm()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <!-- Avatar and Name -->
+                    <div class="flex items-center mb-4">
+                        <div class="avatar-container mr-4">
+                            <img class="avatar rounded-full border-2 border-primary" [src]="selectedUser.avatar" alt="User Avatar" *ngIf="selectedUser.avatar">
+                            <div class="avatar-placeholder rounded-full border-2 border-primary bg-primary text-white flex items-center justify-center" *ngIf="!selectedUser.avatar">
+                                {{ selectedUser.firstname.charAt(0) }}
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-primary">{{ selectedUser.firstname }} {{ selectedUser.lastname }}</h2>
+                            <p class="text-secondary mb-1">{{ selectedUser.email }}</p>
+                            <p class="text-secondary mb-1">{{ selectedUser.username }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Additional user details with icons -->
+                    <div class="flex flex-col items-start w-full mb-4">
+                        <!-- First Name -->
+                        <div class="flex items-center mb-2">
+                            <mat-icon class="mr-2" color="primary">person</mat-icon>
+                            <span class="text-secondary">{{ selectedUser.firstname }}</span>
+                        </div>
+                        <!-- Last Name -->
+                        <div class="flex items-center mb-2">
+                            <mat-icon class="mr-2" color="primary">person</mat-icon>
+                            <span class="text-secondary">{{ selectedUser.lastname }}</span>
+                        </div>
+                        <!-- Email -->
+                        <div class="flex items-center mb-2">
+                            <mat-icon class="mr-2" color="primary">email</mat-icon>
+                            <span class="text-secondary">{{ selectedUser.email }}</span>
+                        </div>
+                        <!-- Username -->
+                        <div class="flex items-center mb-2">
+                            <mat-icon class="mr-2" color="primary">person</mat-icon>
+                            <span class="text-secondary">{{ selectedUser.username }}</span>
+                        </div>
+                        <!-- Phone -->
+                        <div class="flex items-center mb-2">
+                            <mat-icon class="mr-2" color="primary">phone</mat-icon>
+                            <span class="text-secondary">{{ selectedUser.phone }}</span>
+                        </div>
+                        <!-- Role -->
+                        <div class="flex items-center mb-2">
+                            <mat-icon class="mr-2" color="primary">badge</mat-icon>
+                            <span class="text-secondary">{{ selectedUser.role }}</span>
+                        </div>
+                        <!-- Status -->
+                        <div class="flex items-center">
+                            <mat-icon class="mr-2" color="primary">{{ selectedUser.isBanned ? 'block' : 'check_circle' }}</mat-icon>
+                            <span class="text-secondary">{{ selectedUser.isBanned ? 'Banned' : 'Active' }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Update form -->
+                    <div *ngIf="showUpdateForm" class="mt-4">
+                        <mat-form-field class="w-full">
+                            <input matInput placeholder="First Name" [(ngModel)]="selectedUser.firstname">
+                        </mat-form-field>
+                        <mat-form-field class="w-full">
+                            <input matInput placeholder="Last Name" [(ngModel)]="selectedUser.lastname">
+                        </mat-form-field>
+                        <mat-form-field class="w-full">
+                            <input matInput placeholder="Email" [(ngModel)]="selectedUser.email">
+                        </mat-form-field>
+                        <mat-form-field class="w-full">
+                            <input matInput placeholder="Username" [(ngModel)]="selectedUser.username">
+                        </mat-form-field>
+                        <mat-form-field class="w-full">
+                            <input matInput placeholder="Phone" [(ngModel)]="selectedUser.phone">
+                        </mat-form-field>
+                        <mat-form-field class="w-full">
+                            <input matInput placeholder="Role" [(ngModel)]="selectedUser.role">
+                        </mat-form-field>
+                        <!-- Status -->
+                        <mat-slide-toggle color="primary" [(ngModel)]="selectedUser.isBanned">Banned</mat-slide-toggle>
+                        <button mat-raised-button color="primary" class="mt-4" (click)="updateUser(selectedUser)">Update</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </mat-drawer>
+
+
+
+        <mat-drawer-content class="flex flex-col">
+            <!-- Main -->
+            <div class="flex-auto">
+                <!-- Header -->
+                <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
+                    <!-- Title -->
+                    <div>
+                        <div class="text-4xl font-extrabold tracking-tight leading-none">Users</div>
+                        <div class="ml-0.5 font-medium text-secondary" *ngIf="users$ | async as users">
+                            {{ users.length }}
+                            {{ users.length | i18nPlural: {
+                            '=0': 'No user',
+                            '=1': 'User',
+                            'other': 'users'
+                        } }}
+                        </div>
+                    </div>
+                    <!-- Main actions -->
+                    <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
+                        <!-- Search -->
+                        <div class="flex-auto">
+                            <mat-form-field class="fuse-mat-dense fuse-mat-rounded w-full min-w-50" subscriptSizing="dynamic">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                                <input placeholder="Search user" matInput [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'Search user'"[(ngModel)]="searchTerm"
+                                (input)="search()">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contacts list -->
+                <div class="relative">
+                    <ng-container *ngIf="(users$ | async) as users">
+                        <ng-container *ngIf="users.length > 0; else noUsers">
+                            <!-- Group -->
+                            <ng-container *ngFor="let user of filteredUsers; let i = index; trackBy: trackByFn">
+                                <div *ngIf="i === 0 || user.lastname.charAt(0) !== users[i - 1].lastname.charAt(0)"
+                                     class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
+                                    {{ user.lastname.charAt(0) }}
+                                </div>
+                                <!-- Contact -->
+                                <div class="user-item" (click)="onUserClicked(user)">
+                                    <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
+                                       [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedUser || selectedUser.userID !== user.userID,
+                                       'bg-primary-50 dark:bg-hover': selectedUser && selectedUser.userID === user.userID}">
+                                        <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+                                            <ng-container *ngIf="user.avatar ; else defaultAvatar">
+                                                <img class="object-cover w-full h-full" [src]="user.avatar" alt="Contact avatar"/>
+                                            </ng-container>
+                                            <ng-template #defaultAvatar>
+                                                <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                                    {{ user.firstname.charAt(0) }}
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                        <div class="min-w-0 ml-4">
+                                            <div class="font-medium leading-5 truncate">{{ user.firstname }} {{ user.lastname }}</div>
+                                            <div class="font-medium leading-5 truncate"> {{ user.username }}</div>
+                                            <div class="leading-5 truncate text-secondary">{{ user.email }}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <!-- No users -->
+                    <ng-template #noUsers>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                            There are no users subscribed!
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

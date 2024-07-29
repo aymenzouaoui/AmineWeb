@@ -1,0 +1,24 @@
+<div class="centered-container">
+    <div class="dynamic-list">
+      <div
+        *ngFor="let item of items"
+        class="dynamic-list-item">
+        {{ item.text }}
+        <select (change)="setColor(item.text, $event.target.value)">
+          <option value="white">White</option>
+          <option value="red">Red</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+          <!-- Add more colors as needed -->
+        </select>
+      </div>
+    </div>
+
+    <div class="chat-interface">
+      <div class="drop-zone" cdkDropList (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let message of messages" [style.background-color]="message.color" class="message">
+          {{ message.text }}
+        </div>
+      </div>
+    </div>
+  </div>
